@@ -13,7 +13,8 @@ public class Chat extends UnicastRemoteObject implements ChatInterface {
     return this.name;
   }
 
-  public void setClient(ChatInterface c) {
+  public void setClient(ChatInterface c) throws RemoteException {
+    System.out.println("new client " + c.getName());
     client = c;
   }
 

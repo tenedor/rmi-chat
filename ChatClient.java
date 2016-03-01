@@ -16,7 +16,7 @@ public class ChatClient {
       String name = s.nextLine().trim();		    		    	
       ChatInterface client = new Chat(name);
 
-      ChatInterface server = (ChatInterface)Naming.lookup("rmi://localhost/ABC");
+      ChatInterface server = (ChatInterface) Naming.lookup("rmi://localhost/ABC");
       String msg = "[" + client.getName() + "] got connected";
       server.send(msg);
       System.out.println("[System] Chat Remote Object is ready:");
