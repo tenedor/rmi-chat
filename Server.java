@@ -103,7 +103,13 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
   //gets a list of groups
   public Set<String> getGroupsList() throws RemoteException {
-    return groups.keySet();
+    Set<String> keys = groups.keySet();
+    Set<String> cleanedKeys = new HashSet<String>();
+        for(String key: keys){
+          cleanedKeys.add(key);            
+        }
+
+    return cleanedKeys;
   }
 
   public Set<String> getGroupsList(String pattern) throws RemoteException {
@@ -114,6 +120,10 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
   //   returns `false` if the operation was redundant
   //   an event sequence ID enables ordering of per-client log in/out events
   public boolean logIn(int cUID, int eSID, ClientInterface client, String accountName) throws RemoteException {        
+    if(!accounts.contains(accountName)) {
+      throw new RemoteException();
+    }
+
     //if we are logged in with the same cUID and accountName as before, this is
     //redundant, so we can return false immediately
     if(loggedInClients.containsKey(cUID) && loggedInUsers.containsKey(accountName)) {
@@ -150,6 +160,8 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     //also update the user account for this client
     List<Object> clientInfo = Arrays.asList(accountName, eSID);
     loggedInClients.put(cUID, clientInfo);      
+
+    accounts.add(accountName);
 
     return true;
   }
@@ -201,6 +213,9 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
       //remove the client id from logged in clients
       loggedInClients.remove(cUID);
+
+      //remove the client from accounts
+      accounts.remove(accountName);
     }
     else {
       return false;
