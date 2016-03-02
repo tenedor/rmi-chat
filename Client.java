@@ -5,11 +5,11 @@ import java.util.*;
 public class Client extends UnicastRemoteObject implements ClientInterface {
 
   private ServerInterface server;
-  private cUID;
-  private eSID;
-  private Set<int> receivedServerSIDs;
+  private int cUID;
+  private int eSID;
+  private Set<Integer> receivedServerSIDs;
 
-  public accountName = ""; // empty string means client is not logged in
+  public String accountName = ""; // empty string means client is not logged in
 
 
   // General
@@ -21,7 +21,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     // TODO - if there is saved data from a previous run, resume from there
     cUID = server.getClientUID();
     eSID = 0;
-    receivedServerSIDs = new HashSet<int>();
+    receivedServerSIDs = new HashSet<Integer>();
   }
 
   private int nextEventSID() {
@@ -35,12 +35,13 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
   public boolean logIn(String accountName) throws RemoteException {
     boolean retval = server.logIn(cUID, nextEventSID(), this, accountName);
     this.accountName = accountName;
+    System.out.println("Login results: " + retval + ", " + accountName);
     return retval;
   }
 
   public boolean logOut() throws RemoteException {
     //boolean retval = server.logOut(cUID, nextEventSID());
-    boolean retval = server.logOut(this.accountName, nextEventSID());
+    boolean retval = server.logOut(cUID, nextEventSID(), this.accountName);
     this.accountName = "";
     return retval;
   }
@@ -54,6 +55,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     // If so, setting `accountName = ""` and returning is sufficient. I'm not
     // clear on RMI timing interleaving when the server and client call each
     // other concurrently.
+    System.out.println("You have been logged out.");
 
     updateLoginStatus();
   }
@@ -86,8 +88,10 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     } else {
       // if this client's logged-in account doesn't match the recipient, error
-      if (recipientName != accountName) {
-        throw RemoteException;
+      if (!recipientName.equals(accountName)) {
+        System.out.println(recipientName + ", " + accountName);
+        System.out.println("Error, not to the right account");
+        throw new RemoteException();
       }
 
       receivedServerSIDs.add(eSID);
@@ -104,8 +108,9 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     } else {
       // if this client's logged-in account doesn't match the recipient, error
-      if (recipientName != accountName) {
-        throw RemoteException;
+      if (!recipientName.equals(accountName)) {
+        System.out.println("Error, not to the right account");
+        throw new RemoteException();
       }
 
       receivedServerSIDs.add(eSID);

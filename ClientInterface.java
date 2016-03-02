@@ -13,4 +13,5 @@ public interface ClientInterface extends Remote {
 
   // notify client that it was logged out
   public void notifyOfLogOut() throws RemoteException;
+
 }

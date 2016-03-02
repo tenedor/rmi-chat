@@ -1,4 +1,6 @@
 import java.rmi.*;
+import java.util.*;
+
 
 public interface ServerInterface extends Remote {
   // client uid
@@ -27,12 +29,14 @@ public interface ServerInterface extends Remote {
   public boolean logIn(int cUID, int eSID, ClientInterface client,
       String accountName) throws RemoteException;
   //public boolean logOut(int cUID, int eSID) throws RemoteException;
-  public boolean logOut(String accountName, int eSID) throws RemoteException;
+  public boolean logOut(int cUID, int eSID, String accountName) throws RemoteException;
 
   // check logged-in status
   //   returns empty string if the client is not logged in
-  public String getLoginStatus(int cUID) throws RemoteException;
-  //public String getLoginStatus(String accountName) throws RemoteException;
+  public String getLoginStatus(int cUID) throws RemoteException;  
+
+  //gets a list of undelivered messages
+  public boolean getUndeliveredMessages(ClientInterface client, String accountName) throws RemoteException;
 
   // send messages
   //   returns `false` if the server previously received this message
