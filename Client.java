@@ -39,7 +39,8 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
   }
 
   public boolean logOut() throws RemoteException {
-    boolean retval = server.logOut(cUID, nextEventSID());
+    //boolean retval = server.logOut(cUID, nextEventSID());
+    boolean retval = server.logOut(this.accountName, nextEventSID());
     this.accountName = "";
     return retval;
   }

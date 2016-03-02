@@ -26,11 +26,13 @@ public interface ServerInterface extends Remote {
   //   an event sequence ID enables ordering of per-client log in/out events
   public boolean logIn(int cUID, int eSID, ClientInterface client,
       String accountName) throws RemoteException;
-  public boolean logOut(int cUID, int eSID) throws RemoteException;
+  //public boolean logOut(int cUID, int eSID) throws RemoteException;
+  public boolean logOut(String accountName, int eSID) throws RemoteException;
 
   // check logged-in status
   //   returns empty string if the client is not logged in
   public String getLoginStatus(int cUID) throws RemoteException;
+  //public String getLoginStatus(String accountName) throws RemoteException;
 
   // send messages
   //   returns `false` if the server previously received this message
