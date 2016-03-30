@@ -145,6 +145,22 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
   // Receiving messages
   // ------------------
 
+  /**
+  * Receive a message from another account.
+  * <p>
+  * Duplicate message receipts are avoided by examining the server's
+  * {@code eSID}, and in this case a {@code false} boolean is returned to signal
+  * previous receipt.
+  *
+  * @param  eSID          the server's event sequence ID for this message send
+  * @param  senderName    the account name the message was sent from
+  * @param  recipientName the account name the message was sent to
+  * @param  message       the message that has been sent
+  * @param  timestamp     the sender-generated timestamp when this message was
+  *                       created
+  * @return               a {@code true} boolean if the client has received this
+  *                       message send for the first time.
+  */
   public boolean messageFromAccount(int eSID, String senderName,
       String recipientName, String message, int timestamp)
       throws RemoteException {
@@ -165,6 +181,23 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     }
   }
 
+  /**
+  * Receive a group message from another account.
+  * <p>
+  * Duplicate message receipts are avoided by examining the server's
+  * {@code eSID}, and in this case a {@code false} boolean is returned to signal
+  * previous receipt.
+  *
+  * @param  eSID          the server's event sequence ID for this message send
+  * @param  groupName     the group name the message was sent from
+  * @param  senderName    the account name the message was sent from
+  * @param  recipientName the account name the message was sent to
+  * @param  message       the message that has been sent
+  * @param  timestamp     the sender-generated timestamp when this message was
+  *                       created
+  * @return               a {@code true} boolean if the client has received this
+  *                       message send for the first time.
+  */
   public boolean messageFromGroup(int eSID, String groupName, String senderName,
       String recipientName, String message, int timestamp)
       throws RemoteException {
