@@ -322,7 +322,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
   * @param  cUID          an integer identifying the current client user ID
   * @param  eSID          the event sequence ID from the client
   * @param  accountName   the accountName we wish to log in with
-  * @return               a boolean representing whether the login was successful or not  
+  * @return               a boolean representing whether the logout was successful or not  
   */
   public boolean logOut(int cUID, int eSID, String accountName) throws RemoteException {
     //if the user is logged in, and eSID has increased, log them out
@@ -440,7 +440,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
       return true;
   }
   
-    /**
+  /**
   * Sends a message to a group
   * <p>
   * This method checks to ensure that a specific (numbered) message hasn't already 
