@@ -6,7 +6,7 @@
  - Ensure that the rmiregistry is running on your machine by running `rmiregistry`
  - Run the Server by executing `java ServerManager`
  - Run each of the Client machines by running `java ClientManager`
- - From a client machine:
+ - From a client machine, type the following commands:
  -  `create_account <account name>`
  -  `login <account name>`
  -  `create_group <group name> <<list of group members>>`
