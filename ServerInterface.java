@@ -18,20 +18,25 @@ import java.util.*;
  * calling {@link #getUndeliveredMessages}.
  * <p>
  * Clients may also make requests to create and delete accounts and groups and
- * to get a list of those that exist.
+ * to get a list of those that exist. Only one client may be logged into an
+ * account at a time, and a client may only be logged into one account at a
+ * time. When a client logs into an account, it is logged out of any other
+ * accounts and it kicks off any other client logged into that account.
  * <p>
  * Client-server communication is implemented with Java RMI ({@link java.rmi}).
  * If a method invocation fails the client is assumed to have disconnected. Each
  * client must have a client ID (abbreviated as {@code cUID}) for making
  * requests; a {@code cUID} is obtained by calling {@link getClientUID}.
  * <p>
- * A client is expected to maintain a monotonically increasing integer event
- * sequence numbering and to attach
- * <p>
  * A client is expected to attach an event sequence ID ({@code eSID}) to
  * requests where event ordering is important. {@code eSID}s are integers that
  * increase monotonically for message sends to the server and are unique for a
  * given client.
+ * <p>
+ * Error handling is basic. If a method invocation on a client fails, the client
+ * is assumed to have disconnected. No further effort is made to track which
+ * clients are still online. The system is fully asynchronous; in particular,
+ * there is no notion of request timeouts.
  * <p>
  * {@see com.github.tenedor.rmi-chat.Client}
  */
