@@ -2,6 +2,19 @@
 
 *last updated 03/01/16 02:33am*
 
+## Running the code
+ - Ensure that the rmiregistry is running on your machine by running `rmiregistry`
+ - Run the Server by executing `java ServerManager`
+ - Run each of the Client machines by running `java ClientManager`
+ - From a client machine:
+ -  `create_account <account name>`
+ -  `login <account name>`
+ -  `create_group <group name> <<list of group members>>`
+ -  `message <account name> <message>`
+ -  `message_group <group name> <message>`
+ -  `list_groups`
+ -  `list_accounts`
+
 ## Design of the code
 - There are three layers to the design on both the client side and the server side: Interfaces, Implementations, and Managers. These are respectively named XInterface.java, X.java, and XManager.java for X in {Client, Server}.
 - Interfaces define RMI methods that the client and server offer each other.
